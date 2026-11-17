@@ -1,0 +1,103 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Internet and Network -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <!-- Legacy Bluetooth (Android 11 / API 30 and below) -->
+    <uses-permission android:name="android.permission.BLUETOOTH"
+        android:maxSdkVersion="30" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"
+        android:maxSdkVersion="30" />
+
+    <!-- Location – required by Android for BLE scanning on all versions -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!--
+        Android 12+ (API 31+) Bluetooth permissions.
+
+        BLUETOOTH_SCAN:
+          ▸ We do NOT add usesPermissionFlags="neverForLocation" because we
+            ARE using location (ACCESS_FINE_LOCATION) to comply with Android
+            BLE scan requirements. Omitting neverForLocation + having
+            ACCESS_FINE_LOCATION is the correct combination for a filtered
+            hardware-level MSD scan on Android 14 / 15.
+    -->
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
+
+    <!-- Camera (QR code scanning) -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <!-- Wake Lock – keeps CPU alive during active scan -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!--
+        FOREGROUND_SERVICE + FOREGROUND_SERVICE_CONNECTED_DEVICE:
+        Required on Android 14+ (API 34+) to run a foreground service that
+        uses Bluetooth. Without this the OS can kill the scan after ~30 s
+        when the screen is off or the app is backgrounded.
+        flutter_blue_plus uses this internally on Android 14+.
+    -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE" />
+
+    <!--
+        Declare BLE hardware requirement.
+        required="false" means the app is still installable on devices
+        without BLE (we handle it in code), but the Play Store filter
+        will prefer BLE-capable devices.
+    -->
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="false" />
+
+    <application
+        android:label="attendify_tenth_version"
+        android:name="${applicationName}"
+        android:icon="@mipmap/ic_launcher"
+        android:usesCleartextTraffic="true">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:taskAffinity=""
+            android:theme="@style/LaunchTheme"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustResize">
+            <meta-data
+                android:name="io.flutter.embedding.android.NormalTheme"
+                android:resource="@style/NormalTheme" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <!--
+            FlutterBluePlus foreground service (needed on Android 14+).
+            This service is declared by the plugin itself but must be
+            acknowledged here so the OS allows it to start.
+        -->
+        <service
+            android:name="com.lib.flutter_blue_plus.FlutterBluePlusPlugin"
+            android:exported="false"
+            android:foregroundServiceType="connectedDevice" />
+
+        <meta-data
+            android:name="flutterEmbedding"
+            android:value="2" />
+    </application>
+
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.PROCESS_TEXT"/>
+            <data android:mimeType="text/plain"/>
+        </intent>
+    </queries>
+
+</manifest>

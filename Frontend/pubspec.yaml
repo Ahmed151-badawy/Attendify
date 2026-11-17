@@ -1,0 +1,68 @@
+name: Attendify_project
+description: University Attendance System with Beacon Scanner
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  intl: ^0.20.2
+
+  flutter_launcher_icons: ^0.13.1
+
+  cupertino_icons: ^1.0.2
+
+  http: ^1.6.0
+
+  shared_preferences: ^2.2.2
+  qr_flutter: ^4.1.0
+
+  mobile_scanner: ^5.0.0
+
+  geolocator: ^10.1.0
+
+  flutter_beacon: ^0.5.1
+
+  flutter_blue_plus: ^1.31.0
+
+  # ✅ FIXED VERSION: 0.3.1 (0.4.1 doesn't exist on pub.dev)
+  # Uses legacy startAdvertising() - compatible with Bluetooth 4.2 (Samsung A10)
+  beacon_broadcast: ^0.3.1
+
+  permission_handler: ^11.1.0
+
+  flutter_secure_storage: ^9.0.0
+
+  excel: ^4.0.6
+  path_provider: ^2.1.2
+  share_plus: ^7.2.2
+
+  device_info_plus: ^10.1.0
+
+  crypto: ^3.0.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+
+flutter_launcher_icons:
+  android: "ic_launcher"
+  ios: true
+  image_path: "assets/icons/app_icon.png"
+  min_sdk_android: 21
+  remove_alpha_ios: true
+  adaptive_icon_background: "#FFFFFF"
+  adaptive_icon_foreground: "assets/icons/app_icon.png"
