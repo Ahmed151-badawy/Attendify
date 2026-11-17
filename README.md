@@ -222,6 +222,6 @@ pytest tests/test_routing.py tests/test_tools.py tests/test_individual_tools.py 
 
 ---
 
-## Author
+## Author and Coworker
 
-**<Your Name>** – AI Engineer · [LinkedIn](https://linkedin.com/in/your-handle) · [GitHub](https://github.com/your-username)
+**I am Ahmed Elsaid Badawy.** – AI Engineer · [LinkedIn](https://www.linkedin.com/in/ahmed-elsaid-09539124a) · [GitHub](https://github.com/Ahmed151-badawy)
